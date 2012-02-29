@@ -1,0 +1,81 @@
+# Rodrigo Reboucas de Almeida
+# http://www.rodrigor.com.br/disciplinas
+# Projeto: Batalha Naval
+# Implemente os testes abaixo, usando JUnit.
+#
+# (Os testes devem passar)
+#
+# Prazo para commit no Github: 01/03/2012
+
+expecterror "Largura e Altura devem ser maiores que 2" criarJogo largura=2 altura=3
+expecterror "Largura e Altura devem ser maiores que 2" criarJogo largura=3 altura=2
+expecterror "Largura invalida: -1" criarJogo largura=-1 altura=15
+expecterror "Largura invalida: 0" criarJogo largura=0 altura=15
+expecterror "Altura invalida: -1" criarJogo largura=15 altura=-1
+expecterror "Altura invalida: 0" criarJogo largura=15 altura=0
+expecterror "Largura invalida: -1" criarJogo largura=-1 altura=-1
+
+criarJogo largura=20 altura=10
+
+expect 20 getLarguraTabuleiro
+expect 10 getAlturaTabuleiro
+expect 0 getQuantidadeBarcos
+
+
+expecterror "Nome deve conter apenas os seguintes caracteres (A..Z), (0..9) e (_-.)" addBarcoNoJogo nome="%#" tamanho=3
+expecterror "Nome deve conter apenas os seguintes caracteres (A..Z), (0..9) e (_-.)" addBarcoNoJogo nome="&&6" tamanho=3
+expecterror "Nome invalido ''" addBarcoNoJogo nome="" tamanho=3
+expecterror "Barco nao cabe no tabuleiro" addBarcoNoJogo nome="BARCO_GRANDE" tamanho=21
+addBarcoNoJogo nome="BARCO_GRANDE" tamanho=15
+expect 1 getQuantidadeBarcos
+expecterror "Ja existe uma barco com nome 'BARCO_GRANDE' no jogo" addBarcoNoJogo nome="BARCO_GRANDE" tamanho=15
+expecterror "Barco invalido 'LANCHA'" addBarcoNoTabuleiro tabuleiro=1 nome="LANCHA" l1=1 c1=1 l2=4 c2=1
+
+expecterror "Posicao invalida: fora do tabuleiro linha=15 coluna=1" addBarcoNoTabuleiro tabuleiro=1 nome="BARCO_GRANDE" l1=1 c1=1 l2=15 c2=1
+expecterror "Posicao invalida: maior que barco (16 > 15)" addBarcoNoTabuleiro tabuleiro=1 nome="BARCO_GRANDE" l1=1 c1=1 l2=1 c2=16
+expecterror "Posicao invalida: menor que barco (14 < 15)" addBarcoNoTabuleiro tabuleiro=1 nome="BARCO_GRANDE" l1=1 c1=1 l2=1 c2=14
+expecterror "Posicao invalida: barco deve estar na vertical ou horizontal" addBarcoNoTabuleiro tabuleiro=1 nome="BARCO_GRANDE" l1=1 c1=1 l2=2 c2=15
+addBarcoNoTabuleiro tabuleiro=1 nome="BARCO_GRANDE" l1=1 c1=1 l2=1 c2=15
+expecterror "A barco 'BARCO_GRANDE' ja existe no tabuleiro 1" addBarcoNoTabuleiro tabuleiro=1 nome="BARCO_GRANDE" l1=2 c1=1 l2=2 c2=15
+
+addBarcoNoJogo nome="LANCHA" tamanho=3
+expect 2 getQuantidadeBarcos
+expecterror "Posicao invalida: conflito de coordenada com barco 'BARCO_GRANDE'" addBarcoNoTabuleiro tabuleiro=1 nome="LANCHA" l1=1 c1=3 l2=3 c2=3
+expecterror "Posicao invalida: conflito de coordenada com barco 'BARCO_GRANDE'" addBarcoNoTabuleiro tabuleiro=1 nome="LANCHA" l1=1 c1=1 l2=3 c2=1
+expecterror "Posicao invalida: conflito de coordenada com barco 'BARCO_GRANDE'" addBarcoNoTabuleiro tabuleiro=1 nome="LANCHA" l1=1 c1=15 l2=3 c2=15
+expecterror "Posicao invalida: maior que barco (4 > 3)" addBarcoNoTabuleiro tabuleiro=1 nome="LANCHA" l1=1 c1=16 l2=4 c2=16
+expecterror "Posicao invalida: menor que barco (2 < 3)" addBarcoNoTabuleiro tabuleiro=1 nome="LANCHA" l1=1 c1=16 l2=2 c2=16
+expecterror "Posicao invalida: barco deve estar na vertical ou horizontal" addBarcoNoTabuleiro tabuleiro=1 nome="LANCHA" l1=2 c1=1 l2=4 c2=4
+
+#
+# Exemplo usado na especificação do Jogo:
+#
+criarJogo largura=15 altura=15
+expect 15 getLarguraTabuleiro
+expect 15 getAlturaTabuleiro
+expect 0 getQuantidadeBarcos
+
+expecterror "Tamanho de embarcacao invalido: 0" addBarcoNoJogo nome="LANCHA" tamanho=0
+expecterror "Tamanho de embarcacao invalido: -1" addBarcoNoJogo nome="LANCHA" tamanho=-1
+expecterror "Barco nao cabe no tabuleiro" addBarcoNoJogo nome="LANCHA" tamanho=16
+
+
+addBarcoNoJogo nome="PORTA_AVIOES" tamanho=5
+addBarcoNoJogo nome="DESTROYER" tamanho=4
+addBarcoNoJogo nome="CRUZADOR" tamanho=4
+addBarcoNoJogo nome="SUBMARINO" tamanho=3
+addBarcoNoJogo nome="PATRULHA" tamanho=2
+
+
+addBarcoNoTabuleiro tabuleiro=1 nome="PORTA_AVIOES" l1=7 c1=4 l2=11 c2=4
+addBarcoNoTabuleiro tabuleiro=1 nome="DESTROYER" l1=5 c1=7 l2=5 c2=10
+addBarcoNoTabuleiro tabuleiro=1 nome="CRUZADOR" l1=11 c1=9 l2=11 c2=12
+addBarcoNoTabuleiro tabuleiro=1 nome="SUBMARINO" l1=2 c1=2 l2=4 c2=2
+addBarcoNoTabuleiro tabuleiro=1 nome="PATRULHA" l1=14 c1=6 l2=14 c2=7
+
+addBarcoNoTabuleiro tabuleiro=2 nome="PORTA_AVIOES" l1=6 c1=6 l2=6 c2=10
+addBarcoNoTabuleiro tabuleiro=2 nome="DESTROYER" l1=12 c1=5 l2=12 c2=8
+addBarcoNoTabuleiro tabuleiro=2 nome="CRUZADOR" l1=2 c1=3 l2=2 c2=6
+addBarcoNoTabuleiro tabuleiro=2 nome="SUBMARINO" l1=7 c1=3 l2=9 c2=3
+addBarcoNoTabuleiro tabuleiro=2 nome="PATRULHA" l1=10 c1=13 l2=11 c2=13
+
